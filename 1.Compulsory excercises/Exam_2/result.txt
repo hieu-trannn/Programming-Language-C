@@ -1,0 +1,7 @@
+Valid!
+All is letter character - Unvalid!
+Not contain uppercase letter - All is letter character - Unvalid!
+Not contain lowercase letter - All is letter character - Unvalid!
+Not contain uppercase letter - Unvalid!
+Valid!
+Not contain uppercase letter - All is letter character - Unvalid!
