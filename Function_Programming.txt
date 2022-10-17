@@ -1,0 +1,540 @@
+1. OPERATOR OVERLOADING 
+- operator is initialized in Class
+
+Eg : Operator <<>>(out, in) 
+friend ostream &operator<<(ostream &output, const Distance &D)
+{
+    output << "F : " << D.feet << " I : " << D.inches;
+    return output;
+}
+
+friend istream &operator>>(istream &input, Distance &D)
+{
+    input >> D.feet >> D.inches;
+    return input;
+}
+
+Eg : Operator +, = , +=
+Rational operator+(Rational const &obj)
+{
+    Rational res;
+    res.numerator = numerator * obj.denominator + denominator * obj.numerator;
+    res.denominator = denominator * obj.denominator;
+    res.reduce();
+    return res;
+}
+
+        Rational operator=(Rational const &obj)
+            {
+                this->numerator = obj.numerator;
+                this->denominator = obj.denominator;
+                return *this;
+            }
+        void operator=(Triple op)
+            {
+                x = op.z;
+                y = op.x;
+                z = op.y;
+            }
+    // Copy Constructor
+    Rational(Rational const &obj)
+    {
+        this->numerator = obj.numerator;
+        this->denominator = obj.denominator;
+    }
+    // Move Constructor
+    Rational(Rational &&obj)
+    {
+        this->numerator = obj.numerator;
+        this->denominator = obj.denominator;
+        obj.numerator = 0;
+        obj.denominator = 0;
+    }
+
+    Rational operator+=(Rational const &obj)
+    {
+        *this = *this + obj;
+        return *this;
+    }
+
+2. SORTLINE FROM INPUT : 
+
+Eg : By Alphabet : 
+int main()
+{
+    int i, j, count;
+    char str[25][25], temp[25];
+    puts("number of lines: ");
+    cin >> count;
+    puts("enter string:");
+    for (i = 0; i < count; i++)
+        cin >> str[i];
+    for (i = 0; i < count; i++)
+        for (j = i + 1; j < count; j++)
+        {
+            if (strcmp(str[i], str[j]) > 0)
+            {
+                strcpy(temp, str[i]);
+                strcpy(str[i], str[j]);
+                strcpy(str[j], temp);
+            }
+        }
+    printf("output:\n");
+    for (i = 0; i <= count; i++)
+        puts(str[i]);
+}
+
+Eg: by law: ending bit = 0 => reverse, ending bit = 1 => delete last character 
+(in main)
+    char str[50][30];
+    char *lines[50];
+    for (int i = 0; i < 50; i++)
+    {
+        std::cin.getline(str[i], 30);
+        lines[i] = str[i];
+    }
+
+    for (int i = 0; i < 50; i++)
+    {
+        int len = strlen(str[i]);
+        if ((str[i][len - 1] % 2) == 0)
+        {
+            reverse(lines[i]); //revese function below
+            std::cout << str[i] << std::endl;
+        }
+        else
+        {
+            str[i][len - 1] = '\0';
+            std::cout << str[i] << std::endl;
+        }
+    }
+
+3. Reverse string (pointer)
+
+//reverse string (pointer)
+void reverse(char *str)
+{
+    int l, i;
+    char *begin_ptr, *end_ptr, temp;
+
+    l = strlen(str);
+    begin_ptr = str;
+    end_ptr = str;
+
+    for (i = 0; i < l - 1; i++)
+        end_ptr++;
+
+    for (i = 0; i < l / 2; i++)
+    {
+        temp = *end_ptr;
+        *end_ptr = *begin_ptr;
+        *begin_ptr = temp;
+        begin_ptr++;
+        end_ptr--;
+    }
+}
+
+4. Read string line (pointer)
+
+//copy array to pointer
+(5)
+
+//read string line
+int read(char *line[])
+{
+    int nol = 0, len; // nol: number of lines len: number of characters in line
+    char *p, lines[maxline];
+    while ((len = getline(lines)) > 0)
+    {
+        if (nol > maxline)
+            return -1;
+        else
+        {
+            p = copyString(lines);
+            line[nol] = p;
+            nol++;
+        }
+    }
+    fflush(stdin);
+    return nol;
+}
+
+5. Turn array into pointer (string)
+
+//turn type array to pointer (string)
+    char *copyString(char s[])
+    {
+        char *s2;
+        s2 = (char *)malloc(strlen(s));
+
+        strcpy(s2, s);
+        return (char *)s2;
+    }
+
+6. Count integral 
+
+    (in main)
+    {
+    const long double from = 0.0;
+    const long double to = 1.0;
+    long double integralval1 = 0.0; // result 
+    long double x = from;
+    const size_t N = 1000000; // long unsigned int
+    const long double step_width = abs(from - to) / (long double)N;
+    for (size_t n = 0; n < N; ++n)
+    {
+        integralval1 += 4 / (1 + x * x); //expression
+        x += step_width;
+    }
+    integralval1 /= N; // integralval . dx = integralval . abs(from-to)/N
+    cout << "Result of program: " << integralval1 << endl;
+    }
+
+7. Reverse string (pointer) (return pointer)
+
+char *strrev(char *str)
+{
+    char *p1, *p2;
+
+    if (!str || !*str)
+        return str;
+    for (p1 = str, p2 = str + strlen(str) - 1; p2 > p1; ++p1, --p2)
+    {
+        *p1 ^= *p2;
+        *p2 ^= *p1;
+        *p1 ^= *p2;
+    }
+    return str;
+}
+
+8. CHECK FUNCTION
+
+//check if string(char) contain lower letter
+int isContainLower(char pswd[])
+{
+    int n = strlen(pswd);
+    for (int i = 0; i < n; i++)
+    {
+        if (islower(pswd[i]))
+            return 1;
+    }
+    return 0;
+}
+
+//check if string(char) contain upper letter
+int isContainUpper(char pswd[])
+{
+    int n = strlen(pswd);
+    for (int i = 0; i < n; i++)
+    {
+        if (isupper(pswd[i]))
+            return 1;
+    }
+    return 0;
+}
+
+//check if string(char) contain non letter
+int isContainNonletter(char pswd[])
+{
+    int n = strlen(pswd);
+    for (int i = 0; i < n; i++)
+    {
+        if (isalpha(pswd[i]) == 0)
+            return 1;
+    }
+    return 0;
+}
+
+9. MAX AREA OF HISTOGRAM
+
+//get the max rectangular area of histogram
+int Largest_Area_Hist(int hist[], int noh)
+{
+    stack<int> index; // store index (whose value is increasing)
+    int max_area = 0;
+    int t_idx;
+    int temp_area; // area while drop the top
+    int i = 0;
+    while (i < noh)
+    {
+        if (index.empty() || hist[index.top()] <= hist[i]) // stack empty or the current bar is higher than the top
+            index.push(i++);                               // push index to stack
+        else                                               // if current bar is lower
+        {
+            t_idx = index.top(); // store the top index before pop it
+            index.pop();         // pop the top
+            temp_area = hist[t_idx] * (index.empty() ? i : i - index.top() - 1);
+            if (max_area < temp_area)
+                max_area = temp_area; // update new max area if needed
+        }
+    }
+    while (index.empty() == false) // calculate highest area created by the remaining bars
+    {
+        t_idx = index.top();
+        index.pop();
+        temp_area = hist[t_idx] * (index.empty() ? i : i - index.top() - 1);
+
+        if (max_area < temp_area)
+            max_area = temp_area;
+    }
+    return max_area;
+}
+
+10. Turn string to array
+
+void StrtoArr(string str, int arr[], int *n)
+{
+    for (int i = 0; i < 100; i++)
+        arr[i] = 0;
+    int j = 0;
+    for (char c : str)
+    {
+        if (isdigit(c))
+            arr[j] = arr[j] * 10 + (c - 48);
+        else
+            j++;
+    }
+    *n = arr[0];
+}
+
+11. Frequence of every words used
+    // Prints frequencies of individual words in str
+    void printFrequencies(const string &str)
+    {
+        // declaring map of <string, int> type, each word
+        // is mapped to its frequency
+        unordered_map<string, int> wordFreq;
+    
+        // breaking input into word using string stream
+        stringstream ss(str);  // Used for breaking words
+        string word; // To store individual words
+        while (ss >> word)
+            wordFreq[word]++;
+    
+        // now iterating over word, freq pair and printing
+        // them in <, > format
+        unordered_map<string, int>:: iterator p;
+        for (p = wordFreq.begin(); p != wordFreq.end(); p++)
+            cout << "(" << p->first << ", " << p->second << ")\n";
+    }
+
+12. Biến phân số thành tối giản:
+    void reduce()
+        {
+            if ((numerator < 0 && denominator < 0) || (denominator < 0))
+            {
+                this->numerator = -numerator;
+                this->denominator = -denominator;
+            }
+            else
+            {
+                this->numerator = numerator;
+                this->denominator = denominator;
+            }
+            Integer a, b;
+            a = abs(numerator);
+            b = abs(denominator);
+            while (a - b != 0)
+            {
+                a = a - b * (a > b);
+                b = b - a * (b > a);
+            }
+            this->numerator = numerator / a;
+            this->denominator = denominator / a;
+        }
+13. Remove space function: // có thể remove \t, \n, \r như ở 14
+
+void removespace(string s)
+{
+    //traversing the string
+    for (int i = 0; i < s.length(); i++)
+    {
+        if (s[i] == ' ') 
+        {
+            //using in-built function to erase element
+            s.erase(s.begin() + i);
+            i--;
+        }
+    }
+    cout << s;
+}
+
+14. Get lines from file (proceeded), put into vectors
+
+// 4 next functions are in Colmap, used to active function ReadTextFileLines below
+bool IsNotWhiteSpace(const int character)
+{
+    return character != ' ' && character != '\n' && character != '\r' &&
+           character != '\t';
+}
+
+void StringLeftTrim(std::string *str)
+{
+    str->erase(str->begin(),
+               std::find_if(str->begin(), str->end(), IsNotWhiteSpace));
+}
+
+void StringRightTrim(std::string *str)
+{
+    str->erase(std::find_if(str->rbegin(), str->rend(), IsNotWhiteSpace).base(),
+               str->end());
+}
+
+void StringTrim(std::string *str)
+{
+    StringLeftTrim(str);
+    StringRightTrim(str);
+}
+
+// function ReadTextFileLines is in Colmap, used to get lines from file and put into vector in which each line is a elements orderly
+std::vector<std::string> ReadTextFileLines(const std::string &path)
+{
+    std::ifstream file(path);
+    if (!file)
+    {
+        cout << "Unable to open gcp_list.txt file" << endl;
+    }
+    std::string line;
+    std::vector<std::string> lines;
+    while (std::getline(file, line))
+    {
+        StringTrim(&line);
+
+        if (line.empty())
+        {
+            continue;
+        }
+
+        lines.push_back(line);
+    }
+
+    return lines;
+}
+
+15. Giải phương trình bậc 2
+
+//Function used to solve system of two-variable equations
+//a1*x + b1*y = c1
+//a2*x + b2*y = c2
+vector<double> SysEquations2(double a1, double b1, double c1, double a2, double b2, double c2)
+{
+    vector<double> res;
+    double D, Dx, Dy, x, y;
+    D = a1 * b2 - a2 * b1;
+    Dx = c1 * b2 - c2 * b1;
+    Dy = a1 * c2 - a2 * c1;
+    if (D == 0)
+    {
+        if (Dx + Dy == 0)
+        {
+            cout << "Infinite solutions" << endl;
+            IsError = 1;
+        }
+        else
+        {
+            cout << "Zero solution" <<endl;
+            IsError = 1;
+        }
+    }
+    else
+    {
+        x = Dx / D;
+        y = Dy / D;
+        res.push_back(x);
+        res.push_back(y);
+    }
+    return res;
+}
+
+16. Split String: chuỗi => các chữ riêng
+    eg: output: Le, Tran, Dat 
+        std::string data = "Le Tran Dat";
+        std::stringstream spliter;
+
+        spliter << data;
+
+        std::vector<std::string> result;
+        while (!spliter.eof())
+        {
+            std::string str;
+            spliter >> str;
+            result.push_back(str);
+        }
+
+        for (int i = 0; i < result.size(); i++)
+        {
+            std::cout << result.at(i) << std::endl;
+        }
+
+17. Converter string to number (and reverse)
+    eg: string to number:
+        std::stringstream ss;
+        ss << "12345 67.89";
+
+        int nValue;
+        double dValue;
+        ss >> nValue >> dValue;
+
+        std::cout << nValue << " " << dValue << std::endl;
+    
+    eg: number to string:
+        std::stringstream ss;
+
+        int nValue = 12345;
+        double dValue = 67.89;
+        ss << nValue << " " << dValue;
+
+        std::string strValue1, strValue2;
+        ss >> strValue1 >> strValue2;
+
+        std::cout << strValue1 << " " << strValue2 << std::endl;
+        
+ # Programming Language - DuongHieuLinh
+1. CPP_01:
+	+ CPP_01.2: 
+		- input: dãy ADN, output: số lượng Nucleotit mỗi loại (upper như lower)
+		- input: dãy ADN mình tự nhập, output: số lượng Nucleotit mỗi loại (upper phân biệt lower)
+	+ CPP_01.3: tích phân
+	+ CPP_01.4: Vẽ hình với kí tự #
+2. Exam 1:
+	+ Exam_1.1:
+		Input: file với các lines
+		Output: file với các lines mà dòng được xử lí (đảo, xóa kí tự)
+	+ Exam_1.2: Tạo Class Account, Bank
+		- class Bank là bạn class Account, có object: vector các Account
+		- class Bank tác động lên tất cả Account: thêm tiền, thêm lãi suất, ...
+	+ Exam_1.3: Input lines, Out: Dòng và số lượng dòng như nó
+
+3. Exam 2:
+	+ Exam_2.1: 
+		- input: 1 file với các lines : password
+		- Output: in ra 1 file các password có hợp lệ/không và lí do
+	+ Exam_2.2:
+		- Tạo class Triple (1,2,3), chồng toán tử cho nó: + = , <<
+	+ Exam_2.3:
+		- Tạo class, tạo 2 biến static để đếm số object còn sống, số object đã được tạo 
+	+ Exam_2.4: Tìm diện tích lớn nhất của hình chữ nhật trong Histogram
+
+4. Excercise-2_20212:
+	+ People_Leaders_Employees:
+		- Tạo class People: trừu tượng vớ hàm show, set trừu tượng
+		- class Employees + leader thừa kế People 
+		- 2 biến số lượng leader, employees được tạo (static)
+		- một friend function (function của leaders) trong employee để lấy private của employee
+	+ Rational:
+		- Tạo 1 class phân số, dùng template để ép kiểu, biến phân số thành tối giản
+		- Move, copy các constructor (overloading chồng toán tử = )
+		- Chồng toán tử: (=, +, +=)
+		- chồng toán tử: explicit operator double() const{}=> chuyển dạng phân số về double
+	+ Sortline (các file): sắp xếp các lines từ input (nhập) theo thứ tự bảng chữ cái
+	+ Vector3D (hh,cpp,test): 
+		- tạo 2 class Vector3D và point3D,vector thừa kế point, add, scale, nhân cho vector
+
+5. SA_2:
+	+ SA_2.1:
+		- input: số thư + mã vùng, output: vùng nào có bao nhiêu thư
+		- define function (for)
+	+ SA_2.2: 
+		- Input: file với các lines
+		- Output: file với các lines mà dòng được xử lí (đảo, xóa kí tự)
+		
