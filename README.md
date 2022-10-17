@@ -1,4 +1,4 @@
-#This repository is to save Homework, Useful function and some notice in subject Programing Language C/C++ at Hanoi University of Science and Technology
+This repository is to save Homework, Useful function and some notice in subject Programing Language C/C++ at Hanoi University of Science and Technology
 This includes:
 1. Compulsory exercises: Homework exercise
 2. STL Projects: Some researches on Standard Library in C/C++
